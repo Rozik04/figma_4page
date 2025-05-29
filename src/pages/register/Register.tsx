@@ -1,6 +1,6 @@
 import { memo } from "react";
 import type { FormProps } from "antd";
-import { Button, Form, Input, Typography } from "antd";
+import { Form, Input, Typography } from "antd";
 
 import "./style.css";
 
