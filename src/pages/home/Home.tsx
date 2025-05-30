@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 const Home = () => {
-  return <div>Home</div>;
+  return <div></div>;
 };
 
 export default memo(Home);

@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const mainApi = createApi({
   reducerPath: "mainApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "",
+    baseUrl: "https://keldibekov.online",
     prepareHeaders: (headers) => {
-      const token = "";
+      const token = null;
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -13,7 +13,7 @@ export const mainApi = createApi({
     },
   }),
   endpoints: () => ({}),
-  tagTypes: ["USERS"],
+  tagTypes: ["AUTH"],
 });
 
 export const {} = mainApi;
