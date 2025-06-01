@@ -1,10 +1,8 @@
+import { Button, Form, Input, type FormProps, Typography } from "antd";
 import { memo } from "react";
-import { Form, Button, Input, Typography, Select } from "antd";
-import type { FormProps } from "antd";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
-import { useRegisterMutation } from "../../redux/api/auth.api";
-import { useGetRegionsQuery } from "../../redux/api/region.api";
+import { useLoginMutation } from "../../redux/api/auth.api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -19,25 +17,18 @@ export type FieldType = {
   img?: string;
 };
 
-const Register = () => {
+const Login = () => {
   const email = useSelector((state: RootState) => state.auth.email);
-  const { data } = useGetRegionsQuery({});
-  const options = data?.data?.map((region: any) => ({
-    value: region.id,
-    label: region.name,
-  }));
-  const [registerUser, { isLoading, isError }] = useRegisterMutation();
-
+  const [loginAuth, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
 
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    values.img = "https://image";
-    registerUser(values)
+    loginAuth(values)
       .unwrap()
-      .then(() => toast.success("Registered successfully !"))
-      .catch((error) => toast.error(`${error}`));
+      .then(() => toast.success("Logged In successfully !"))
+      .catch(() => toast.error("Wrong Password !"));
 
-    navigate("/login");
+      navigate("/")
   };
 
   return (
@@ -47,9 +38,8 @@ const Register = () => {
           className="text-center"
           style={{ fontFamily: "Inter" }}
           level={3}>
-          Register
+          Login
         </Title>
-
         <Form
           name="basic"
           initialValues={{ email }}
@@ -57,44 +47,6 @@ const Register = () => {
           autoComplete="off"
           layout="vertical"
           style={{ paddingTop: "10px" }}>
-          <Form.Item<FieldType>
-            label="FirstName"
-            name="firstname"
-            rules={[
-              { required: true, message: "Please input your FirstName!" },
-            ]}
-            style={{ fontWeight: "600" }}>
-            <Input
-              type="text"
-              style={{ height: "45px" }}
-              placeholder="Enter your FirstName"
-            />
-          </Form.Item>
-
-          <Form.Item<FieldType>
-            label="LastName"
-            name="lastname"
-            rules={[{ required: true, message: "Please input your LastName!" }]}
-            style={{ fontWeight: "600" }}>
-            <Input
-              type="text"
-              style={{ height: "45px" }}
-              placeholder="Enter your LastName"
-            />
-          </Form.Item>
-
-          <Form.Item<FieldType>
-            label="Region"
-            name="regionId"
-            rules={[{ required: true, message: "Please input your LastName!" }]}
-            style={{ fontWeight: "600" }}>
-            <Select
-              defaultValue="Select a Region"
-              style={{ width: "100%", height: "45px" }}
-              options={options}
-            />
-          </Form.Item>
-
           <Form.Item<FieldType>
             label="Email"
             name="email"
@@ -117,6 +69,7 @@ const Register = () => {
               type="password"
               style={{ height: "45px" }}
               placeholder="Enter your Password"
+              //   disabled={true}
             />
           </Form.Item>
 
@@ -134,14 +87,13 @@ const Register = () => {
                 fontFamily: "Inter",
                 fontWeight: "500",
               }}>
-              Sign Up
+              Sign In
             </Button>
           </Form.Item>
         </Form>
       </div>
-      {isError && toast.error("Something went wrong !")}
     </section>
   );
 };
 
-export default memo(Register);
+export default memo(Login);

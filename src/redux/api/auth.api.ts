@@ -28,9 +28,22 @@ const extendedApi = mainApi.injectEndpoints({
       }),
       invalidatesTags: ["AUTH"],
     }),
+
+    login: build.mutation({
+      query: (body) => ({
+        method: "POST",
+        url: "/auth/login",
+        body,
+      }),
+      invalidatesTags: ["AUTH"],
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useSendOtpMutation, useVerifyOtpMutation, useRegisterMutation } =
-  extendedApi;
+export const {
+  useSendOtpMutation,
+  useVerifyOtpMutation,
+  useRegisterMutation,
+  useLoginMutation,
+} = extendedApi;
