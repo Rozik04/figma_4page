@@ -1,13 +1,26 @@
 import { memo, type FC } from "react";
 import { Input, Typography, type GetProps } from "antd";
+import { useVerifyOtpMutation } from "../../redux/api/auth.api";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setAuth } from "../../redux/features/auth.slice";
 
 type OTPProps = GetProps<typeof Input.OTP>;
 
 const { Title } = Typography;
 
 const VerifyOTP: FC<{ email: string }> = ({ email }) => {
+  const [verifyOtp, { isLoading, isError }] = useVerifyOtpMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const onChange: OTPProps["onChange"] = (text) => {
-    console.log({ email, otp: text });
+    verifyOtp({ email, otp: text })
+      .unwrap()
+      .then(() => {
+        dispatch(setAuth({ email }));
+        navigate("/register");
+      });
   };
 
   const sharedProps: OTPProps = { onChange };
@@ -21,11 +34,21 @@ const VerifyOTP: FC<{ email: string }> = ({ email }) => {
           </span>
         </Title>
         <div className="pb-4">
-          <p className="font-[Inter]">
-            Enter the SMS-Code, which is we send to this email
+          <p className="font-[Inter] text-[16px]">
+            Enter the SMS-Code, which is we send to this email{" "}
+            <span className="text-red-600">{email}</span>
           </p>
         </div>
-        <Input.OTP formatter={(str) => str.toUpperCase()} {...sharedProps} />
+        <Input.OTP
+          disabled={isLoading}
+          formatter={(str) => str.toUpperCase()}
+          {...sharedProps}
+        />
+        {isError && (
+          <p className="text-red-600 font-[Inter] mt-2.5 font-medium">
+            Wrong Email or OTP Code !
+          </p>
+        )}
       </div>
     </section>
   );

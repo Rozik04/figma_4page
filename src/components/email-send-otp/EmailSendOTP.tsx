@@ -1,18 +1,25 @@
 import { memo, type FC } from "react";
 import type { FormProps } from "antd";
-import { Form, Input, Typography } from "antd";
+import { Button, Form, Input, Typography } from "antd";
+import toast from "react-hot-toast";
 
 const { Title } = Typography;
 
 interface EmailSendOTPProps {
   setEmail: (p: string) => void;
+  isLoading: boolean;
+  isError: boolean;
 }
 
 type FieldType = {
   email: string;
 };
 
-const EmailSendOTP: FC<EmailSendOTPProps> = ({ setEmail }) => {
+const EmailSendOTP: FC<EmailSendOTPProps> = ({
+  setEmail,
+  isLoading,
+  isError,
+}) => {
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     setEmail(values.email || "");
   };
@@ -45,13 +52,24 @@ const EmailSendOTP: FC<EmailSendOTPProps> = ({ setEmail }) => {
             />
           </Form.Item>
           <Form.Item label={null}>
-            <button
-              type="submit"
-              className="w-full h-[45px] text-[18px] font-[Inter] font-semibold bg-[#00727d] hover:bg-[#3dc2cf] rounded-lg text-text-primary transition-all">
-              Send-Otp
-            </button>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isLoading}
+              className="w-full rounded-lg text-text-primary transition-all"
+              style={{
+                backgroundColor: "#00727d",
+                borderColor: "#00727d",
+                height: "45px",
+                fontSize: "16px",
+                fontFamily: "Inter",
+                fontWeight: "500",
+              }}>
+              Send-OTP
+            </Button>
           </Form.Item>
         </Form>
+        {isError && toast.error("You are already registered!")}
       </div>
     </section>
   );

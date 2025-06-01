@@ -18,7 +18,7 @@ const Header = () => {
           </li>
           <li>
             <NavLink
-              to={"/register"}
+              to={"/otp"}
               className={"px-10 py-3 border border-[#3dc2cf] rounded-full"}>
               <span className="text-[18px] text-[#3dc2cf]">Register</span>
             </NavLink>
