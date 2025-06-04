@@ -25,11 +25,15 @@ const EmailSendOTP: FC<EmailSendOTPProps> = ({
   };
 
   return (
-    <section className="w-full h-screen flex justify-center items-center">
-      <div className="max-w-[500px] w-full bg-text-primary shadow rounded-2xl p-4">
+    <section className="w-full h-screen flex justify-center items-center bg-gradient-to-br from-[#e0f7fa] to-[#ffffff]">
+      <div className="max-w-[500px] w-full bg-white shadow-xl rounded-3xl px-6 py-8">
         <Title
           className="text-center"
-          style={{ fontFamily: "Inter" }}
+          style={{
+            fontFamily: "Inter",
+            fontWeight: 600,
+            color: "#00727d",
+          }}
           level={3}>
           Register
         </Title>
@@ -39,15 +43,15 @@ const EmailSendOTP: FC<EmailSendOTPProps> = ({
           onFinish={onFinish}
           autoComplete="off"
           layout="vertical"
-          style={{ paddingTop: "10px" }}>
+          className="pt-4">
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Please input your Email!" }]}
-            style={{ fontWeight: "600" }}>
+            rules={[{ required: true, message: "Please enter your Email!" }]}
+            className="font-semibold">
             <Input
               type="email"
-              style={{ height: "45px" }}
+              className="h-[45px] rounded-lg border border-gray-300 px-4 focus:border-[#00727d] transition-all"
               placeholder="Enter your Email"
             />
           </Form.Item>
@@ -56,16 +60,8 @@ const EmailSendOTP: FC<EmailSendOTPProps> = ({
               type="primary"
               htmlType="submit"
               loading={isLoading}
-              className="w-full rounded-lg text-text-primary transition-all"
-              style={{
-                backgroundColor: "#00727d",
-                borderColor: "#00727d",
-                height: "45px",
-                fontSize: "16px",
-                fontFamily: "Inter",
-                fontWeight: "500",
-              }}>
-              Send-OTP
+              className="w-full rounded-lg transition-all bg-gradient-to-r from-cyan-600 to-blue-500 hover:opacity-90 text-white font-semibold text-[16px] h-[45px] font-[Inter]">
+              Send OTP
             </Button>
           </Form.Item>
         </Form>

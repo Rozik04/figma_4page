@@ -25,67 +25,80 @@ const Login = () => {
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     loginAuth(values)
       .unwrap()
-      .then(() => toast.success("Logged In successfully !"))
-      .catch(() => toast.error("Wrong Password !"));
+      .then(() => toast.success("Logged in successfully!"))
+      .catch(() => toast.error("Wrong Password!"));
 
-      navigate("/")
+    navigate("/");
   };
 
   return (
-    <section className="w-full min-h-screen flex justify-center items-center">
-      <div className="max-w-[500px] w-full bg-text-primary shadow rounded-2xl p-4">
+    <section className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-[#e3f2fd] to-[#ffffff]">
+      <div className="max-w-[500px] w-full bg-white shadow-xl rounded-3xl px-8 py-10 text-center flex flex-col gap-5">
         <Title
           className="text-center"
-          style={{ fontFamily: "Inter" }}
-          level={3}>
-          Login
+          style={{
+            fontFamily: "Inter",
+            fontWeight: 600,
+            fontSize: "28px",
+            color: "#00727d",
+          }}>
+          Welcome Back
         </Title>
+
+        <p className="text-[16px] font-[Inter] text-gray-600 mb-4">
+          Please login to your account
+        </p>
+
         <Form
           name="basic"
           initialValues={{ email }}
           onFinish={onFinish}
           autoComplete="off"
           layout="vertical"
-          style={{ paddingTop: "10px" }}>
+          className="w-full">
           <Form.Item<FieldType>
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Please input your Email!" }]}
-            style={{ fontWeight: "600" }}>
+            rules={[{ required: true, message: "Please enter your Email!" }]}>
             <Input
               type="email"
-              style={{ height: "45px" }}
               placeholder="Enter your Email"
-              disabled={true}
+              style={{
+                height: "45px",
+                fontFamily: "Inter",
+                fontSize: "15px",
+              }}
             />
           </Form.Item>
 
           <Form.Item<FieldType>
             label="Password"
             name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
-            style={{ fontWeight: "600" }}>
+            rules={[{ required: true, message: "Please enter your Password!" }]}>
             <Input.Password
               type="password"
-              style={{ height: "45px" }}
               placeholder="Enter your Password"
-              //   disabled={true}
+              style={{
+                height: "45px",
+                fontFamily: "Inter",
+                fontSize: "15px",
+              }}
             />
           </Form.Item>
 
-          <Form.Item label={null}>
+          <Form.Item>
             <Button
               type="primary"
-              loading={isLoading}
               htmlType="submit"
-              className="w-full rounded-lg text-text-primary transition-all"
+              loading={isLoading}
+              className="w-full rounded-lg transition-all"
               style={{
                 backgroundColor: "#00727d",
                 borderColor: "#00727d",
                 height: "45px",
                 fontSize: "16px",
                 fontFamily: "Inter",
-                fontWeight: "500",
+                fontWeight: 500,
               }}>
               Sign In
             </Button>

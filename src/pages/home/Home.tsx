@@ -5,7 +5,7 @@ const Home = () => {
     <section>
       <div className="container min-h-screen mx-auto flex justify-center items-center">
         <div>
-          <h1 className="text-black text-2xl">Hello everyone !</h1>
+          <h1 className="text-black text-2xl">Home!</h1>
         </div>
       </div>
     </section>

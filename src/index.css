@@ -13,3 +13,11 @@
 @theme {
   --color-text-primary: #fff;
 }
+
+
+.otp-input .ant-input {
+  font-size: 20px;
+  height: 50px;
+  text-align: center;
+  border-radius: 8px;
+}

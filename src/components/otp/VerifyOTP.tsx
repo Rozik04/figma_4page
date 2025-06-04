@@ -26,27 +26,27 @@ const VerifyOTP: FC<{ email: string }> = ({ email }) => {
   const sharedProps: OTPProps = { onChange };
 
   return (
-    <section>
-      <div className="max-w-[500px] w-full bg-text-primary shadow rounded-2xl p-10 text-center flex flex-col items-center gap-2.5">
-        <Title level={5}>
-          <span className="font-[Inter] font-semibold text-2xl">
-            Enter the SMS-Code
-          </span>
+    <section className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-[#e3f2fd] to-[#ffffff]">
+      <div className="max-w-[500px] w-full bg-white shadow-xl rounded-3xl px-8 py-10 text-center flex flex-col items-center gap-5">
+        <Title level={4} style={{ fontFamily: "Inter", color: "#00727d" }}>
+          Enter the SMS Code
         </Title>
-        <div className="pb-4">
-          <p className="font-[Inter] text-[16px]">
-            Enter the SMS-Code, which is we send to this email{" "}
-            <span className="text-red-600">{email}</span>
-          </p>
-        </div>
+
+        <p className="font-[Inter] text-[16px] text-gray-600">
+          Enter the code we sent to your email:{" "}
+          <span className="text-[#d32f2f] font-semibold">{email}</span>
+        </p>
+
         <Input.OTP
           disabled={isLoading}
           formatter={(str) => str.toUpperCase()}
           {...sharedProps}
+          className="!w-full !max-w-[350px] otp-input"
         />
+
         {isError && (
-          <p className="text-red-600 font-[Inter] mt-2.5 font-medium">
-            Wrong Email or OTP Code !
+          <p className="text-red-600 font-[Inter] font-medium mt-2">
+            Wrong Email or OTP Code!
           </p>
         )}
       </div>
