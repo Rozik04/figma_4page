@@ -8,7 +8,7 @@ const extendedApi = mainApi.injectEndpoints({
         url: "/auth/send-otp",
         body,
       }),
-      invalidatesTags: ["AUTH"],
+      invalidatesTags: ['US'],
     }),
 
     verifyOtp: build.mutation({
@@ -17,7 +17,7 @@ const extendedApi = mainApi.injectEndpoints({
         url: `/auth/verify-otp`,
         body,
       }),
-      invalidatesTags: ["AUTH"],
+      invalidatesTags: ["US"],
     }),
 
     register: build.mutation({
@@ -26,7 +26,7 @@ const extendedApi = mainApi.injectEndpoints({
         url: "/auth/register",
         body,
       }),
-      invalidatesTags: ["AUTH"],
+      invalidatesTags: ["US"],
     }),
 
     login: build.mutation({
@@ -35,7 +35,7 @@ const extendedApi = mainApi.injectEndpoints({
         url: "/auth/login",
         body,
       }),
-      invalidatesTags: ["AUTH"],
+      invalidatesTags: ["US"],
     }),
   }),
   overrideExisting: false,

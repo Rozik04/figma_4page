@@ -8,7 +8,7 @@ const extendedApi = mainApi.injectEndpoints({
         url: "/region",
         params,
       }),
-      providesTags: ["AUTH"],
+      providesTags: ["US"],
     }),
   }),
   overrideExisting: false,

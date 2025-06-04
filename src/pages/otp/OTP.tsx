@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react";
-import EmailSendOTP from "../../components/email-send-otp/EmailSendOTP";
+import EmailSendOTP from "../../components/emailSendOtp/EmailSendOTP";
 import VerifyOTP from "../../components/otp/VerifyOTP";
 import { useSendOtpMutation } from "../../redux/api/auth.api";
 

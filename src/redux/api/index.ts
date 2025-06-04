@@ -13,7 +13,7 @@ export const mainApi = createApi({
     },
   }),
   endpoints: () => ({}),
-  tagTypes: ["AUTH"],
+  tagTypes: ["US"],
 });
 
 export const {} = mainApi;
