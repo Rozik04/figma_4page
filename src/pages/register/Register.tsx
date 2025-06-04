@@ -1,5 +1,5 @@
-import { memo } from "react";
-import { Form, Button, Input, Typography, Select } from "antd";
+import { memo, useState } from "react";
+import { Form, Button, Input, Typography, Select, Upload } from "antd";
 import type { FormProps } from "antd";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
@@ -7,6 +7,7 @@ import { useRegisterMutation } from "../../redux/api/auth.api";
 import { useGetRegionsQuery } from "../../redux/api/region.api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { UploadOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 
@@ -26,12 +27,27 @@ const Register = () => {
     value: region.id,
     label: region.name,
   }));
-  const [registerUser, { isLoading, isError }] = useRegisterMutation();
 
+  const [registerUser, { isLoading, isError }] = useRegisterMutation();
   const navigate = useNavigate();
 
+  const [imageBase64, setImageBase64] = useState<string>("");
+
+  const handleImageChange = (file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageBase64(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const beforeUpload = (file: File) => {
+    handleImageChange(file);
+    return false; 
+  };
+
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    values.img = "https://image";
+    values.img = imageBase64 || "https://image";
     registerUser(values)
       .unwrap()
       .then(() => toast.success("Registered successfully !"))
@@ -43,10 +59,7 @@ const Register = () => {
   return (
     <section className="w-full min-h-screen flex justify-center items-center">
       <div className="max-w-[500px] w-full bg-text-primary shadow rounded-2xl p-4">
-        <Title
-          className="text-center"
-          style={{ fontFamily: "Inter" }}
-          level={3}>
+        <Title className="text-center" style={{ fontFamily: "Inter" }} level={3}>
           Register
         </Title>
 
@@ -56,40 +69,31 @@ const Register = () => {
           onFinish={onFinish}
           autoComplete="off"
           layout="vertical"
-          style={{ paddingTop: "10px" }}>
+          style={{ paddingTop: "10px" }}
+        >
           <Form.Item<FieldType>
             label="FirstName"
             name="firstname"
-            rules={[
-              { required: true, message: "Please input your FirstName!" },
-            ]}
-            style={{ fontWeight: "600" }}>
-            <Input
-              type="text"
-              style={{ height: "45px" }}
-              placeholder="Enter your FirstName"
-            />
+            rules={[{ required: true, message: "Please input your FirstName!" }]}
+          >
+            <Input placeholder="Enter your FirstName" style={{ height: "45px" }} />
           </Form.Item>
 
           <Form.Item<FieldType>
             label="LastName"
             name="lastname"
             rules={[{ required: true, message: "Please input your LastName!" }]}
-            style={{ fontWeight: "600" }}>
-            <Input
-              type="text"
-              style={{ height: "45px" }}
-              placeholder="Enter your LastName"
-            />
+          >
+            <Input placeholder="Enter your LastName" style={{ height: "45px" }} />
           </Form.Item>
 
           <Form.Item<FieldType>
             label="Region"
             name="regionId"
-            rules={[{ required: true, message: "Please input your LastName!" }]}
-            style={{ fontWeight: "600" }}>
+            rules={[{ required: true, message: "Please select your Region!" }]}
+          >
             <Select
-              defaultValue="Select a Region"
+              placeholder="Select a Region"
               style={{ width: "100%", height: "45px" }}
               options={options}
             />
@@ -99,33 +103,30 @@ const Register = () => {
             label="Email"
             name="email"
             rules={[{ required: true, message: "Please input your Email!" }]}
-            style={{ fontWeight: "600" }}>
-            <Input
-              type="email"
-              style={{ height: "45px" }}
-              placeholder="Enter your Email"
-              disabled={true}
-            />
+          >
+            <Input type="email" disabled={true} style={{ height: "45px" }} />
           </Form.Item>
 
           <Form.Item<FieldType>
             label="Password"
             name="password"
             rules={[{ required: true, message: "Please input your Password!" }]}
-            style={{ fontWeight: "600" }}>
-            <Input.Password
-              type="password"
-              style={{ height: "45px" }}
-              placeholder="Enter your Password"
-            />
+          >
+            <Input.Password placeholder="Enter your Password" style={{ height: "45px" }} />
           </Form.Item>
 
-          <Form.Item label={null}>
+          <Form.Item label="Profile Image (optional)">
+            <Upload beforeUpload={beforeUpload} maxCount={1} showUploadList={true}>
+              <Button icon={<UploadOutlined />}>Select Image</Button>
+            </Upload>
+          </Form.Item>
+
+          <Form.Item>
             <Button
               type="primary"
-              loading={isLoading}
               htmlType="submit"
-              className="w-full rounded-lg text-text-primary transition-all"
+              loading={isLoading}
+              className="w-full rounded-lg"
               style={{
                 backgroundColor: "#00727d",
                 borderColor: "#00727d",
@@ -133,7 +134,8 @@ const Register = () => {
                 fontSize: "16px",
                 fontFamily: "Inter",
                 fontWeight: "500",
-              }}>
+              }}
+            >
               Sign Up
             </Button>
           </Form.Item>
